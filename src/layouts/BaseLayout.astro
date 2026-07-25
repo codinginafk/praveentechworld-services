@@ -55,7 +55,7 @@ const {
 
     <slot />
 
-    <!-- Lenis Smooth Scroll & Inspira UI 3D Tilt + Mouse Spotlight Integration -->
+    <!-- Lenis Smooth Scroll & Apple-Style Scroll Reveal + Inspira 3D Tilt -->
     <script>
       import Lenis from 'lenis';
 
@@ -85,7 +85,26 @@ const {
 
       requestAnimationFrame(raf);
 
-      // 2. Inspira UI Mouse Spotlight Cursor Tracking
+      // 2. Apple-Style Scroll-Triggered IntersectionObserver
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -50px 0px',
+        threshold: 0.12,
+      };
+
+      const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.scroll-reveal').forEach((el) => {
+        scrollObserver.observe(el);
+      });
+
+      // 3. Inspira UI Mouse Spotlight Cursor Tracking
       document.addEventListener('mousemove', (e) => {
         const cards = document.querySelectorAll('.spotlight-card');
         cards.forEach((card) => {
@@ -97,7 +116,7 @@ const {
         });
       });
 
-      // 3. Inspira UI 3D Tilt Perspective Cards
+      // 4. Inspira UI 3D Tilt Perspective Cards
       const tiltCards = document.querySelectorAll('.tilt-card');
       tiltCards.forEach((card) => {
         card.addEventListener('mousemove', (e: Event) => {
