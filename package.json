@@ -8,6 +8,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "monitor": "node scripts/system_health_monitor.mjs",
     "astro": "astro"
   },
   "dependencies": {
