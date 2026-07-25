@@ -1,0 +1,136 @@
+---
+const services = [
+  {
+    icon: "🎯",
+    title: "Paid Performance Ads (Google & Meta)",
+    badge: "Growth Engine",
+    color: "from-indigo-500 to-purple-600",
+    description: "End-to-end management of paid performance campaigns across Google Ads (Search, Performance Max, Display) and Meta Ads (Facebook & Instagram).",
+    features: [
+      "Targeted Audience & Keyword Bidding",
+      "A/B Ad Creative & Copy Testing",
+      "ROAS Optimization & Budget Pacing",
+      "Conversion Tracking & Event Setup"
+    ]
+  },
+  {
+    icon: "🤖",
+    title: "AI Content & Workflow Automation",
+    badge: "Engineering Edge",
+    color: "from-emerald-400 to-cyan-500",
+    description: "Harness local and cloud AI models (DeepSeek R1, Qwen 3.6, Ollama, ChatGPT) to automate spreadsheet cleaning, log triage, and content generation.",
+    features: [
+      "Custom Python Automation Scripts",
+      "Prompt Engineering & Workflow Loops",
+      "Local LLM Infrastructure Setup",
+      "AI-Assisted Content Pipelines"
+    ]
+  },
+  {
+    icon: "🛒",
+    title: "E-Commerce & Regional Marketplace Ops",
+    badge: "Retail Operations",
+    color: "from-amber-400 to-orange-500",
+    description: "Hands-on management of live Magento and Shopify e-commerce web stores alongside multi-channel marketplace integrations.",
+    features: [
+      "Live Catalog Sync (Noon & Carrefour)",
+      "ElGrocer & InstaShop Product Sync",
+      "Pricing Rules & Promo Banner Launches",
+      "Stock & Fulfillment Workflow Sync"
+    ]
+  },
+  {
+    icon: "📊",
+    title: "SEO/SEM Strategy & GA4 Analytics",
+    badge: "Organic Search",
+    color: "from-cyan-400 to-blue-600",
+    description: "Data-driven SEO strategies that capture search intent, fix technical indexing bottlenecks, and measure user engagement in Google Analytics 4.",
+    features: [
+      "GA4 Event Tracking & Custom Reports",
+      "Google Search Console Indexing Fixes",
+      "Technical SEO & Core Web Vitals",
+      "Power BI Executive Dashboards"
+    ]
+  },
+  {
+    icon: "⚡",
+    title: "Edge Web Architecture & Hosting",
+    badge: "Web Infrastructure",
+    color: "from-blue-500 to-indigo-600",
+    description: "Building lightning-fast static and dynamic web applications (Astro, Next.js, HTML5/CSS3) with 100/100 Lighthouse performance scores.",
+    features: [
+      "Ultra-Fast Astro & Edge Deployments",
+      "DNS, SSL & Custom Subdomain Config",
+      "Host Outage Response & AMC Supervision",
+      "Security Hardening & Clean Code Architecture"
+    ]
+  },
+  {
+    icon: "🎬",
+    title: "Creative Media & Post-Production",
+    badge: "Visual Brand",
+    color: "from-fuchsia-500 to-pink-600",
+    description: "Eye-catching graphic banners, social media video reels, and promotional ad creatives using industry-standard design tools.",
+    features: [
+      "Premiere Pro & CapCut Video Editing",
+      "Photoshop & Canva Ad Graphics",
+      "Social Media Content Calendars",
+      "Email Marketing Graphic Campaigns"
+    ]
+  }
+];
+---
+
+<section id="services" class="py-24 px-4 sm:px-6 lg:px-8 relative">
+  <div class="mx-auto max-w-7xl">
+    
+    <!-- Section Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+      <span class="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 text-xs font-bold text-indigo-300">
+        🛠️ Core Competencies & Service Offerings
+      </span>
+      <h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-5xl">
+        High-Impact Digital <span class="gradient-text">Execution Services</span>
+      </h2>
+      <p class="text-base text-gray-400 leading-relaxed">
+        Combining full-funnel digital marketing mastery with a Computer Science engineering background to drive measurable business growth.
+      </p>
+    </div>
+
+    <!-- Services Grid -->
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {services.map((s) => (
+        <div class="glass-card rounded-3xl p-8 flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between mb-6">
+              <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-800/80 border border-gray-700 text-3xl shadow-inner">
+                {s.icon}
+              </div>
+              <span class="rounded-full bg-gray-800/60 border border-gray-700/60 px-3 py-1 text-[11px] font-bold text-gray-300">
+                {s.badge}
+              </span>
+            </div>
+
+            <h3 class="text-xl font-extrabold text-white mb-3 group-hover:text-indigo-400 transition-colors">
+              {s.title}
+            </h3>
+
+            <p class="text-sm text-gray-400 leading-relaxed mb-6">
+              {s.description}
+            </p>
+          </div>
+
+          <div class="space-y-2.5 pt-6 border-t border-gray-800/80">
+            {s.features.map((f) => (
+              <div class="flex items-center gap-2.5 text-xs font-medium text-gray-300">
+                <span class={`h-1.5 w-1.5 rounded-full bg-gradient-to-r ${s.color}`}></span>
+                {f}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
