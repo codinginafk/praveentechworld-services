@@ -38,7 +38,42 @@ const {
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
-  <body class="bg-[#090d16] text-gray-100 antialiased selection:bg-indigo-500 selection:text-white">
+  <body class="bg-[#070a12] text-gray-100 antialiased selection:bg-indigo-500 selection:text-white">
     <slot />
+
+    <!-- Lenis Smooth Scroll & Inspira UI Mouse Spotlight Integration -->
+    <script>
+      import Lenis from 'lenis';
+
+      // 1. Initialize Lenis Smooth Scroll
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 2,
+      });
+
+      function raf(time: number) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+
+      requestAnimationFrame(raf);
+
+      // 2. Inspira UI Mouse Spotlight Cursor Tracking
+      document.addEventListener('mousemove', (e) => {
+        const cards = document.querySelectorAll('.spotlight-card');
+        cards.forEach((card) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
+          (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
+        });
+      });
+    </script>
   </body>
 </html>

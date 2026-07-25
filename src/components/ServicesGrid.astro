@@ -11,7 +11,8 @@ const services = [
       "A/B Ad Creative & Copy Testing",
       "ROAS Optimization & Budget Pacing",
       "Conversion Tracking & Event Setup"
-    ]
+    ],
+    bentoSpan: "lg:col-span-2"
   },
   {
     icon: "🤖",
@@ -24,7 +25,8 @@ const services = [
       "Prompt Engineering & Workflow Loops",
       "Local LLM Infrastructure Setup",
       "AI-Assisted Content Pipelines"
-    ]
+    ],
+    bentoSpan: "lg:col-span-1"
   },
   {
     icon: "🛒",
@@ -37,7 +39,8 @@ const services = [
       "ElGrocer & InstaShop Product Sync",
       "Pricing Rules & Promo Banner Launches",
       "Stock & Fulfillment Workflow Sync"
-    ]
+    ],
+    bentoSpan: "lg:col-span-1"
   },
   {
     icon: "📊",
@@ -50,7 +53,8 @@ const services = [
       "Google Search Console Indexing Fixes",
       "Technical SEO & Core Web Vitals",
       "Power BI Executive Dashboards"
-    ]
+    ],
+    bentoSpan: "lg:col-span-2"
   },
   {
     icon: "⚡",
@@ -63,7 +67,8 @@ const services = [
       "DNS, SSL & Custom Subdomain Config",
       "Host Outage Response & AMC Supervision",
       "Security Hardening & Clean Code Architecture"
-    ]
+    ],
+    bentoSpan: "lg:col-span-1"
   },
   {
     icon: "🎬",
@@ -76,7 +81,8 @@ const services = [
       "Photoshop & Canva Ad Graphics",
       "Social Media Content Calendars",
       "Email Marketing Graphic Campaigns"
-    ]
+    ],
+    bentoSpan: "lg:col-span-2"
   }
 ];
 ---
@@ -87,43 +93,43 @@ const services = [
     <!-- Section Header -->
     <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
       <span class="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 text-xs font-bold text-indigo-300">
-        🛠️ Core Competencies & Service Offerings
+        ✨ Inspira Bento Grid & Interactive Services
       </span>
       <h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-5xl">
         High-Impact Digital <span class="gradient-text">Execution Services</span>
       </h2>
       <p class="text-base text-gray-400 leading-relaxed">
-        Combining full-funnel digital marketing mastery with a Computer Science engineering background to drive measurable business growth.
+        Combining full-funnel digital marketing mastery with a Computer Science engineering background to drive measurable business growth. Hover over cards for mouse-spotlight effects.
       </p>
     </div>
 
-    <!-- Services Grid -->
+    <!-- Bento Services Grid -->
     <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       {services.map((s) => (
-        <div class="glass-card rounded-3xl p-8 flex flex-col justify-between group">
+        <div class={`glass-card spotlight-card rounded-3xl p-8 flex flex-col justify-between group ${s.bentoSpan}`}>
           <div>
             <div class="flex items-center justify-between mb-6">
-              <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-800/80 border border-gray-700 text-3xl shadow-inner">
+              <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-900/90 border border-gray-700/80 text-3xl shadow-inner group-hover:scale-110 transition-transform">
                 {s.icon}
               </div>
-              <span class="rounded-full bg-gray-800/60 border border-gray-700/60 px-3 py-1 text-[11px] font-bold text-gray-300">
+              <span class="rounded-full bg-gray-800/80 border border-gray-700/80 px-3.5 py-1 text-[11px] font-bold text-gray-200">
                 {s.badge}
               </span>
             </div>
 
-            <h3 class="text-xl font-extrabold text-white mb-3 group-hover:text-indigo-400 transition-colors">
+            <h3 class="text-2xl font-extrabold text-white mb-3 group-hover:text-indigo-400 transition-colors">
               {s.title}
             </h3>
 
-            <p class="text-sm text-gray-400 leading-relaxed mb-6">
+            <p class="text-sm text-gray-300 leading-relaxed mb-6">
               {s.description}
             </p>
           </div>
 
-          <div class="space-y-2.5 pt-6 border-t border-gray-800/80">
+          <div class="grid sm:grid-cols-2 gap-3 pt-6 border-t border-gray-800/80">
             {s.features.map((f) => (
               <div class="flex items-center gap-2.5 text-xs font-medium text-gray-300">
-                <span class={`h-1.5 w-1.5 rounded-full bg-gradient-to-r ${s.color}`}></span>
+                <span class={`h-2 w-2 rounded-full bg-gradient-to-r ${s.color}`}></span>
                 {f}
               </div>
             ))}

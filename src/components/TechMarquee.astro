@@ -1,0 +1,36 @@
+---
+const techItems = [
+  { name: "Google Ads", icon: "🎯" },
+  { name: "Meta Ads", icon: "📱" },
+  { name: "DeepSeek R1", icon: "🤖" },
+  { name: "Ollama CLI", icon: "⚙️" },
+  { name: "Magento", icon: "🛒" },
+  { name: "Shopify", icon: "🛍️" },
+  { name: "GA4 Analytics", icon: "📊" },
+  { name: "Power BI", icon: "📈" },
+  { name: "Astro Edge", icon: "⚡" },
+  { name: "Noon Marketplace", icon: "📦" },
+  { name: "Carrefour Sync", icon: "🏬" },
+  { name: "Premiere Pro", icon: "🎬" },
+  { name: "CapCut Video", icon: "✂️" },
+  { name: "Photoshop", icon: "🎨" },
+  { name: "Canva Pro", icon: "🖼️" },
+  { name: "IndexNow Protocol", icon: "📡" }
+];
+---
+
+<section class="py-10 border-y border-gray-800/80 bg-gray-950/60 overflow-hidden relative">
+  <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#070a12] to-transparent z-10 pointer-events-none"></div>
+  <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#070a12] to-transparent z-10 pointer-events-none"></div>
+
+  <div class="flex overflow-hidden select-none">
+    <div class="animate-marquee gap-6 items-center">
+      {techItems.concat(techItems).map((item) => (
+        <div class="flex items-center gap-2.5 rounded-2xl border border-gray-800 bg-gray-900/60 px-5 py-2.5 text-xs font-bold text-gray-300 shadow-md backdrop-blur-md hover:border-indigo-500/50 hover:text-white transition-all shrink-0">
+          <span class="text-base">{item.icon}</span>
+          <span>{item.name}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
