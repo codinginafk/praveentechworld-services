@@ -1,0 +1,169 @@
+---
+---
+
+<div class="absolute inset-0 pointer-events-none overflow-hidden z-0 w-full h-full min-h-[550px]">
+  <canvas id="matrix-canvas" class="w-full h-full block opacity-85 dark:opacity-75"></canvas>
+</div>
+
+<script>
+  import * as THREE from 'three';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('matrix-canvas') as HTMLCanvasElement;
+    if (!canvas) return;
+
+    const parent = canvas.parentElement;
+    if (!parent) return;
+
+    let width = parent.offsetWidth || window.innerWidth;
+    let height = parent.offsetHeight || window.innerHeight;
+    const isMobile = window.innerWidth < 768;
+
+    // 1. Scene & Camera Setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, width / height, 1, 1000);
+    camera.position.set(0, 0, 300);
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+    });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // 2. Generate 3D Matrix Falling Code Particle Rain
+    const streamCount = isMobile ? 80 : 180;
+    const particlesPerStream = isMobile ? 12 : 20;
+    const totalParticles = streamCount * particlesPerStream;
+
+    const positions = new Float32Array(totalParticles * 3);
+    const speeds = new Float32Array(totalParticles);
+    const opacities = new Float32Array(totalParticles);
+    const initialY = new Float32Array(totalParticles);
+
+    let idx = 0;
+    for (let s = 0; s < streamCount; s++) {
+      const streamX = (Math.random() - 0.5) * 700;
+      const streamZ = (Math.random() - 0.5) * 400;
+      const streamSpeed = 1.2 + Math.random() * 2.5;
+
+      for (let p = 0; p < particlesPerStream; p++) {
+        const y = 300 + p * 22 + Math.random() * 50;
+        positions[idx * 3] = streamX;
+        positions[idx * 3 + 1] = y;
+        positions[idx * 3 + 2] = streamZ;
+
+        initialY[idx] = y;
+        speeds[idx] = streamSpeed;
+        opacities[idx] = (1 - p / particlesPerStream) * 0.85;
+
+        idx++;
+      }
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    // Colors: Matrix Neon Green / Cyber Emerald & Cyan
+    const isDark = document.documentElement.classList.contains('dark');
+    const matrixColor = isDark ? 0x34d399 : 0x059669;
+
+    const material = new THREE.PointsMaterial({
+      color: matrixColor,
+      size: isMobile ? 2.8 : 2.4,
+      transparent: true,
+      opacity: 0.75,
+      blending: THREE.AdditiveBlending,
+    });
+
+    const matrixRain = new THREE.Points(geometry, material);
+    scene.add(matrixRain);
+
+    // Ambient Cyber Grid Particles (Background Depth)
+    const starCount = isMobile ? 120 : 250;
+    const starPositions = new Float32Array(starCount * 3);
+    for (let k = 0; k < starCount * 3; k += 3) {
+      starPositions[k] = (Math.random() - 0.5) * 800;
+      starPositions[k + 1] = (Math.random() - 0.5) * 600;
+      starPositions[k + 2] = (Math.random() - 0.5) * 400;
+    }
+    const starGeometry = new THREE.BufferGeometry();
+    starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    const starMaterial = new THREE.PointsMaterial({
+      color: isDark ? 0x38bdf8 : 0x0284c7,
+      size: 1.8,
+      transparent: true,
+      opacity: 0.4,
+    });
+    const stars = new THREE.Points(starGeometry, starMaterial);
+    scene.add(stars);
+
+    // 3. Mouse & Touch Cursor Disruption
+    let mouseX = 0;
+    let mouseY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX - window.innerWidth / 2) * 0.2;
+      mouseY = (e.clientY - window.innerHeight / 2) * 0.2;
+    }, { passive: true });
+
+    document.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        mouseX = (e.touches[0].clientX - window.innerWidth / 2) * 0.2;
+        mouseY = (e.touches[0].clientY - window.innerHeight / 2) * 0.2;
+      }
+    }, { passive: true });
+
+    // Resize Handler
+    function updateSize() {
+      if (!parent) return;
+      width = parent.offsetWidth || window.innerWidth;
+      height = parent.offsetHeight || window.innerHeight;
+
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    }
+
+    window.addEventListener('resize', updateSize);
+
+    // Theme Toggle Color Watcher
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains('dark');
+      material.color.setHex(isDark ? 0x34d399 : 0x059669);
+      starMaterial.color.setHex(isDark ? 0x38bdf8 : 0x0284c7);
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    // 4. Smooth Matrix Rain Animation Loop (Top to Bottom Falling Stream)
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Parallax Camera Follow
+      camera.position.x += (mouseX - camera.position.x) * 0.03;
+      camera.position.y += (-mouseY - camera.position.y) * 0.03;
+      camera.lookAt(0, 0, 0);
+
+      const posAttr = matrixRain.geometry.attributes.position;
+      const posArray = posAttr.array as Float32Array;
+
+      for (let p = 0; p < totalParticles; p++) {
+        const yIndex = p * 3 + 1;
+        posArray[yIndex] -= speeds[p];
+
+        // Loop back to top when falling below bottom bound
+        if (posArray[yIndex] < -350) {
+          posArray[yIndex] = 350 + Math.random() * 40;
+        }
+      }
+
+      posAttr.needsUpdate = true;
+      stars.rotation.z += 0.0005;
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  });
+</script>
