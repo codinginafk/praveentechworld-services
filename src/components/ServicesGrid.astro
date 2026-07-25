@@ -1,138 +1,114 @@
 ---
-const services = [
+const capabilities = [
   {
-    icon: "🎯",
-    title: "Paid Performance Ads (Google & Meta)",
-    badge: "Growth Engine",
-    color: "from-indigo-500 to-purple-600",
-    description: "End-to-end management of paid performance campaigns across Google Ads (Search, Performance Max, Display) and Meta Ads (Facebook & Instagram).",
-    features: [
-      "Targeted Audience & Keyword Bidding",
-      "A/B Ad Creative & Copy Testing",
-      "ROAS Optimization & Budget Pacing",
-      "Conversion Tracking & Event Setup"
-    ],
-    bentoSpan: "lg:col-span-2"
+    icon: "🎬",
+    title: "Video Editing (CapCut & Premiere Pro)",
+    badge: "Video Post-Production",
+    description: "I take raw footage and edit short-form CapCut video reels for Instagram & TikTok (with captions, cuts, and sound effects), plus full Premiere Pro video ad edits for Meta and YouTube.",
+    deliverables: [
+      "CapCut Short Reels with Auto-Captions & Sound Effects",
+      "Premiere Pro Video Ads with Motion Graphics",
+      "Format Conversions for TikTok, Reels & YouTube Shorts",
+      "Promo Video Banners for E-Commerce Campaigns"
+    ]
   },
   {
-    icon: "🤖",
-    title: "AI Content & Workflow Automation",
-    badge: "Engineering Edge",
-    color: "from-emerald-400 to-cyan-500",
-    description: "Harness local and cloud AI models (DeepSeek R1, Qwen 3.6, Ollama, ChatGPT) to automate spreadsheet cleaning, log triage, and content generation.",
-    features: [
-      "Custom Python Automation Scripts",
-      "Prompt Engineering & Workflow Loops",
-      "Local LLM Infrastructure Setup",
-      "AI-Assisted Content Pipelines"
-    ],
-    bentoSpan: "lg:col-span-1"
+    icon: "🎯",
+    title: "Paid Ad Campaigns (Google & Meta Ads)",
+    badge: "Performance Ads",
+    description: "I set up and manage paid ad campaigns from scratch—writing ad copy, building audience segments, setting up Meta Pixels & Google Conversion tracking, and optimizing budget pacing.",
+    deliverables: [
+      "Google Search & Performance Max Campaign Setup",
+      "Meta Ads (Facebook/Instagram) Audience Targeting",
+      "Pixel & GA4 Conversion Event Tracking",
+      "A/B Testing Ad Copy & Visual Creatives"
+    ]
   },
   {
     icon: "🛒",
-    title: "E-Commerce & Regional Marketplace Ops",
-    badge: "Retail Operations",
-    color: "from-amber-400 to-orange-500",
-    description: "Hands-on management of live Magento and Shopify e-commerce web stores alongside multi-channel marketplace integrations.",
-    features: [
-      "Live Catalog Sync (Noon & Carrefour)",
-      "ElGrocer & InstaShop Product Sync",
-      "Pricing Rules & Promo Banner Launches",
-      "Stock & Fulfillment Workflow Sync"
-    ],
-    bentoSpan: "lg:col-span-1"
+    title: "E-Commerce Catalog Sync (Noon & Carrefour)",
+    badge: "Store Operations",
+    description: "I manage Shopify and Magento online stores, update product descriptions, set up price rules, and synchronize your catalog live across regional marketplaces like Noon and Carrefour.",
+    deliverables: [
+      "Shopify & Magento Store Product Listings",
+      "Live Catalog & Inventory Sync on Noon & Carrefour",
+      "ElGrocer & InstaShop Product Updates",
+      "Promo Banner Launches & Checkout Flow Fixes"
+    ]
   },
   {
-    icon: "📊",
-    title: "SEO/SEM Strategy & GA4 Analytics",
-    badge: "Organic Search",
-    color: "from-cyan-400 to-blue-600",
-    description: "Data-driven SEO strategies that capture search intent, fix technical indexing bottlenecks, and measure user engagement in Google Analytics 4.",
-    features: [
-      "GA4 Event Tracking & Custom Reports",
-      "Google Search Console Indexing Fixes",
-      "Technical SEO & Core Web Vitals",
-      "Power BI Executive Dashboards"
-    ],
-    bentoSpan: "lg:col-span-2"
+    icon: "🤖",
+    title: "AI Automation Scripts & Python Tools",
+    badge: "Python & Local LLMs",
+    description: "I write custom Python scripts using local AI models (DeepSeek R1 & Ollama) to clean messy spreadsheets, parse server log files during outages, and automate repetitive tasks.",
+    deliverables: [
+      "Python Data Cleaning & Formatting Scripts",
+      "Local DeepSeek & Ollama Workflow Pipelines",
+      "Server Log Parsing & Outage Triage Scripts",
+      "Automated Excel / CSV Data Processing"
+    ]
   },
   {
     icon: "⚡",
-    title: "Edge Web Architecture & Hosting",
+    title: "Fast Web Apps & GA4 Technical SEO",
     badge: "Web Infrastructure",
-    color: "from-blue-500 to-indigo-600",
-    description: "Building lightning-fast static and dynamic web applications (Astro, Next.js, HTML5/CSS3) with 100/100 Lighthouse performance scores.",
-    features: [
-      "Ultra-Fast Astro & Edge Deployments",
-      "DNS, SSL & Custom Subdomain Config",
-      "Host Outage Response & AMC Supervision",
-      "Security Hardening & Clean Code Architecture"
-    ],
-    bentoSpan: "lg:col-span-1"
-  },
-  {
-    icon: "🎬",
-    title: "Creative Media & Post-Production",
-    badge: "Visual Brand",
-    color: "from-fuchsia-500 to-pink-600",
-    description: "Eye-catching graphic banners, social media video reels, and promotional ad creatives using industry-standard design tools.",
-    features: [
-      "Premiere Pro & CapCut Video Editing",
-      "Photoshop & Canva Ad Graphics",
-      "Social Media Content Calendars",
-      "Email Marketing Graphic Campaigns"
-    ],
-    bentoSpan: "lg:col-span-2"
+    description: "I build ultra-fast, modern websites using Astro and Next.js that load in milliseconds and score 100/100 on Google Lighthouse, complete with GA4 tracking and Search Console indexing.",
+    deliverables: [
+      "Ultra-Fast Astro / Next.js Web App Builds",
+      "Google Analytics 4 & Search Console Setup",
+      "IndexNow Protocol Instant Search Indexing",
+      "DNS, SSL & Subdomain Hosting Setup"
+    ]
   }
 ];
 ---
 
-<section id="services" class="py-24 px-4 sm:px-6 lg:px-8 relative">
-  <div class="mx-auto max-w-7xl">
+<section id="capabilities" class="py-24 px-4 sm:px-6 lg:px-8 relative">
+  <div class="mx-auto max-w-5xl space-y-16">
     
     <!-- Section Header -->
-    <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+    <div class="text-center max-w-3xl mx-auto space-y-4">
       <span class="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-50 dark:bg-indigo-500/10 px-4 py-1.5 text-xs font-bold text-indigo-700 dark:text-indigo-300 shadow-sm">
-        ✨ Inspira Bento Grid & Interactive Services
+        🛠️ Practical Capabilities & Real Work
       </span>
       <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
-        High-Impact Digital <span class="gradient-text">Execution Services</span>
+        Here is exactly <span class="gradient-text">what I can do for you</span>
       </h2>
       <p class="text-base text-slate-600 dark:text-gray-400 leading-relaxed font-medium">
-        Combining full-funnel digital marketing mastery with a Computer Science engineering background to drive measurable business growth. Hover over cards for mouse-spotlight effects.
+        No vague buzzwords or soulless logo carousels. Here is the concrete, practical work I build and manage:
       </p>
     </div>
 
-    <!-- Bento Services Grid -->
-    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-      {services.map((s) => (
-        <div class={`glass-card spotlight-card rounded-3xl p-8 flex flex-col justify-between group ${s.bentoSpan}`}>
-          <div>
-            <div class="flex items-center justify-between mb-6">
-              <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 dark:bg-gray-900/90 border border-slate-200 dark:border-gray-700/80 text-3xl shadow-inner group-hover:scale-110 transition-transform">
-                {s.icon}
+    <!-- Elaborate Capability Cards Grid -->
+    <div class="space-y-8">
+      {capabilities.map((cap) => (
+        <div class="glass-card spotlight-card rounded-3xl p-8 border border-slate-200 dark:border-gray-800">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div class="flex items-center gap-4">
+              <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 dark:bg-gray-900 border border-indigo-200 dark:border-gray-700 text-3xl shadow-sm">
+                {cap.icon}
               </div>
-              <span class="rounded-full bg-slate-100 dark:bg-gray-800/80 border border-slate-200 dark:border-gray-700/80 px-3.5 py-1 text-[11px] font-bold text-slate-700 dark:text-gray-200">
-                {s.badge}
-              </span>
+              <div>
+                <span class="text-xs font-mono font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">{cap.badge}</span>
+                <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white mt-0.5">{cap.title}</h3>
+              </div>
             </div>
-
-            <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white mb-3 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-              {s.title}
-            </h3>
-
-            <p class="text-sm text-slate-600 dark:text-gray-300 leading-relaxed mb-6 font-medium">
-              {s.description}
-            </p>
           </div>
 
-          <div class="grid sm:grid-cols-2 gap-3 pt-6 border-t border-slate-200 dark:border-gray-800/80">
-            {s.features.map((f) => (
-              <div class="flex items-center gap-2.5 text-xs font-semibold text-slate-700 dark:text-gray-300">
-                <span class={`h-2 w-2 rounded-full bg-gradient-to-r ${s.color}`}></span>
-                {f}
-              </div>
-            ))}
+          <p class="text-sm text-slate-700 dark:text-gray-300 leading-relaxed mb-6 font-medium">
+            {cap.description}
+          </p>
+
+          <div class="pt-6 border-t border-slate-200 dark:border-gray-800">
+            <div class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3">Concrete Deliverables:</div>
+            <div class="grid sm:grid-cols-2 gap-3">
+              {cap.deliverables.map((d) => (
+                <div class="flex items-center gap-2.5 text-xs font-medium text-slate-700 dark:text-gray-300">
+                  <span class="text-emerald-600 dark:text-emerald-400 font-bold">✓</span>
+                  <span>{d}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       ))}
