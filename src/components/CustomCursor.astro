@@ -1,0 +1,66 @@
+---
+---
+
+<!-- Custom Cursor Elements -->
+<div id="cursor-dot" class="pointer-events-none fixed top-0 left-0 z-[99999] h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-600 dark:bg-indigo-400 transition-transform duration-75 ease-out shadow-sm hidden md:block"></div>
+<div id="cursor-ring" class="pointer-events-none fixed top-0 left-0 z-[99998] h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-indigo-500/40 dark:border-indigo-400/40 transition-all duration-150 ease-out hidden md:block"></div>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+
+    if (!dot || !ring) return;
+
+    let mouseX = -100;
+    let mouseY = -100;
+    let ringX = -100;
+    let ringY = -100;
+
+    // Mouse Movement Tracking
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+    });
+
+    // Smooth Inertia Ring Follow Loop
+    function renderRing() {
+      ringX += (mouseX - ringX) * 0.18;
+      ringY += (mouseY - ringY) * 0.18;
+
+      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      requestAnimationFrame(renderRing);
+    }
+    renderRing();
+
+    // Hover Scaling & Magnetic State over Buttons & Links
+    const interactiveElements = document.querySelectorAll('a, button, select, input, textarea, .glass-card, .tilt-card');
+
+    interactiveElements.forEach((el) => {
+      el.addEventListener('mouseenter', () => {
+        ring.classList.add('scale-150', 'border-indigo-600', 'bg-indigo-500/10', 'dark:bg-indigo-400/10');
+        dot.classList.add('scale-125', 'bg-cyan-500');
+      });
+
+      el.addEventListener('mouseleave', () => {
+        ring.classList.remove('scale-150', 'border-indigo-600', 'bg-indigo-500/10', 'dark:bg-indigo-400/10');
+        dot.classList.remove('scale-125', 'bg-cyan-500');
+      });
+    });
+
+    // Ripple Click Animation on All Buttons
+    document.addEventListener('click', (e) => {
+      const ripple = document.createElement('div');
+      ripple.className = 'button-ripple-effect';
+      ripple.style.left = `${e.clientX}px`;
+      ripple.style.top = `${e.clientY}px`;
+      document.body.appendChild(ripple);
+
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+  });
+</script>
