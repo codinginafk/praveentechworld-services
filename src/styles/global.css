@@ -28,6 +28,30 @@
   }
 }
 
+/* Magical Cursor Particle Dust Trails */
+.cursor-trail-particle {
+  position: fixed;
+  pointer-events: none;
+  font-size: 14px;
+  line-height: 1;
+  user-select: none;
+  transform: translate(-50%, -50%) scale(1);
+  animation: trailFade 0.5s ease-out forwards;
+  will-change: transform, opacity;
+  z-index: 99995;
+}
+
+@keyframes trailFade {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.4) translateY(-14px);
+  }
+}
+
 /* Button & Click Micro-Interactions */
 button, a {
   transition: transform 0.15s ease-out, background-color 0.2s ease;
