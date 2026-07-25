@@ -2,8 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
-import ThreeCanvas from "../components/ThreeCanvas.astro";
-import ParticleCanvas from "../components/ParticleCanvas.astro";
+import MercuryBackgroundCanvas from "../components/MercuryBackgroundCanvas.astro";
 import CustomCursor from "../components/CustomCursor.astro";
 import InteractiveTabs from "../components/InteractiveTabs.astro";
 import BeforeAfterSlider from "../components/BeforeAfterSlider.astro";
@@ -19,13 +18,10 @@ import Footer from "../components/Footer.astro";
   <CustomCursor />
   <Header />
   <main>
-    <div class="relative">
-      <ParticleCanvas />
+    <!-- Mercury Command Inspired 3D Particle Background Hero Section -->
+    <div class="relative overflow-hidden">
+      <MercuryBackgroundCanvas />
       <Hero />
-    </div>
-    
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 scroll-reveal">
-      <ThreeCanvas />
     </div>
 
     <InteractiveTabs />
