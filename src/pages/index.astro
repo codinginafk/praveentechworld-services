@@ -2,6 +2,9 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
+import ParticleCanvas from "../components/ParticleCanvas.astro";
+import InteractiveTabs from "../components/InteractiveTabs.astro";
+import BeforeAfterSlider from "../components/BeforeAfterSlider.astro";
 import ServicesGrid from "../components/ServicesGrid.astro";
 import CaseStudies from "../components/CaseStudies.astro";
 import ExperienceMatrix from "../components/ExperienceMatrix.astro";
@@ -13,7 +16,12 @@ import Footer from "../components/Footer.astro";
 <BaseLayout>
   <Header />
   <main>
-    <Hero />
+    <div class="relative">
+      <ParticleCanvas />
+      <Hero />
+    </div>
+    <InteractiveTabs />
+    <BeforeAfterSlider />
     <ServicesGrid />
     <CaseStudies />
     <ExperienceMatrix />

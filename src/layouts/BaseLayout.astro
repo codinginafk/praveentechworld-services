@@ -7,7 +7,7 @@ interface Props {
 }
 
 const {
-  title = "Praveen Kumar Mishra — Digital Marketing, AI Automation & Services",
+  title = "Praveen Kumar Mishra — Freelance Growth & Tech Services",
   description = "Digital Marketing Executive, AI Content Creator & Growth Engineer. Full-funnel Google/Meta Ads, AI automation scripts, e-commerce catalog sync, and GA4 analytics.",
 } = Astro.props;
 ---
@@ -48,10 +48,14 @@ const {
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
-  <body class="bg-slate-50 text-slate-900 antialiased selection:bg-indigo-500 selection:text-white">
+  <body class="bg-slate-50 text-slate-900 antialiased selection:bg-indigo-500 selection:text-white relative">
+    
+    <!-- Lenis Scroll Progress Indicator -->
+    <div id="scroll-progress"></div>
+
     <slot />
 
-    <!-- Lenis Smooth Scroll & Inspira UI Mouse Spotlight Integration -->
+    <!-- Lenis Smooth Scroll & Inspira UI 3D Tilt + Mouse Spotlight Integration -->
     <script>
       import Lenis from 'lenis';
 
@@ -64,6 +68,14 @@ const {
         smoothWheel: true,
         wheelMultiplier: 1,
         touchMultiplier: 2,
+      });
+
+      const progressBar = document.getElementById('scroll-progress');
+
+      lenis.on('scroll', ({ progress }) => {
+        if (progressBar) {
+          progressBar.style.transform = `scaleX(${progress})`;
+        }
       });
 
       function raf(time: number) {
@@ -82,6 +94,24 @@ const {
           const y = e.clientY - rect.top;
           (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
           (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
+        });
+      });
+
+      // 3. Inspira UI 3D Tilt Perspective Cards
+      const tiltCards = document.querySelectorAll('.tilt-card');
+      tiltCards.forEach((card) => {
+        card.addEventListener('mousemove', (e: Event) => {
+          const mouseEvent = e as MouseEvent;
+          const rect = (card as HTMLElement).getBoundingClientRect();
+          const x = mouseEvent.clientX - rect.left - rect.width / 2;
+          const y = mouseEvent.clientY - rect.top - rect.height / 2;
+          const rotX = (-y / rect.height) * 12;
+          const rotY = (x / rect.width) * 12;
+          (card as HTMLElement).style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-4px)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+          (card as HTMLElement).style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
         });
       });
     </script>

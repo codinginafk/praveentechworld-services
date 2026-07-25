@@ -28,6 +28,18 @@
   }
 }
 
+/* Scroll Progress Bar (Lenis Synced) */
+#scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3.5px;
+  background: linear-gradient(90deg, #4f46e5 0%, #0284c7 50%, #059669 100%);
+  z-index: 9999;
+  transform-origin: 0%;
+  transform: scaleX(0);
+  transition: transform 0.1s ease-out;
+}
+
 /* Light Mode (DEFAULT) Glassmorphism & Card System */
 .glass-card {
   background: rgba(255, 255, 255, 0.9);
@@ -42,7 +54,7 @@
 
 .glass-card:hover {
   border-color: rgba(99, 102, 241, 0.5);
-  transform: translateY(-6px) scale(1.01);
+  transform: translateY(-6px);
   box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.18);
 }
 
@@ -57,6 +69,43 @@
   background: linear-gradient(135deg, #4f46e5 0%, #0284c7 50%, #059669 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* Inspira UI 3D Tilt Card Perspective */
+.tilt-card {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease-out, box-shadow 0.3s ease;
+}
+
+/* Animate UI Border Beam Effect */
+.border-beam {
+  position: relative;
+}
+
+.border-beam::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--beam-angle, 0deg), transparent 70%, #4f46e5 85%, #0284c7 95%, transparent 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: borderBeamMove 6s linear infinite;
+}
+
+@keyframes borderBeamMove {
+  0% { --beam-angle: 0deg; }
+  100% { --beam-angle: 360deg; }
+}
+
+@property --beam-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
 }
 
 /* Mouse Spotlight Effect */
@@ -144,62 +193,6 @@ html.lenis, html.lenis body {
 
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
-}
-
-/* Shimmer Button Effect (Inspira UI) */
-.btn-shimmer {
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-shimmer::after {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    60deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.35) 50%,
-    transparent 70%
-  );
-  transform: rotate(30deg);
-  animation: shimmerSweep 4s infinite;
-}
-
-@keyframes shimmerSweep {
-  0% { transform: translateX(-100%) rotate(30deg); }
-  20%, 100% { transform: translateX(100%) rotate(30deg); }
-}
-
-/* Infinite Marquee Slider (Animate UI) */
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
-}
-
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 25s linear infinite;
-}
-
-.animate-marquee:hover {
-  animation-play-state: paused;
 }
 
 .ambient-glow {
