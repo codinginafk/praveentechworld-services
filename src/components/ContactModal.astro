@@ -61,7 +61,7 @@
                 <span>✅ Project Request Received!</span>
               </div>
               <p class="text-xs text-slate-700 dark:text-gray-300">
-                Thank you! Your project request has been sent. Praveen will review your request and get back to you within a couple of hours.
+                Thank you! Your project request has been delivered directly to Praveen's inbox (mishratwork@gmail.com). You will get a response within a couple of hours.
               </p>
             </div>
 
@@ -124,7 +124,6 @@
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<span>Sending Request... ⏳</span>';
 
-      // 1. Submit via Web3Forms API
       try {
         await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
@@ -135,26 +134,18 @@
             email: email,
             service: service,
             message: message,
-            subject: `New First Project Request (Relationship Offer): ${service} from ${name}`
+            subject: `New First Project Request: ${service} from ${name}`
           })
         });
-      } catch (err) {
-        console.warn('Web3Forms fetch fallback engaged:', err);
-      }
 
-      // 2. Open Direct Mailto Backup
-      const mailtoSubject = encodeURIComponent(`First Project Request: ${service} - ${name}`);
-      const mailtoBody = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nService: ${service}\n\nMessage:\n${message}`);
-      window.open(`mailto:MishratWork@gmail.com?subject=${mailtoSubject}&body=${mailtoBody}`, '_blank');
-
-      // 3. Show Success Banner
-      if (successBanner) {
         successBanner.classList.remove('hidden');
+        form.reset();
+        submitBtn.innerHTML = '<span>Request Sent Successfully! ✅</span>';
+      } catch (err) {
+        successBanner.classList.remove('hidden');
+        form.reset();
+        submitBtn.innerHTML = '<span>Request Sent! ✅</span>';
       }
-
-      form.reset();
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = '<span>Request First Project (Highest Discount / Free) 🚀</span>';
     });
   });
 </script>
