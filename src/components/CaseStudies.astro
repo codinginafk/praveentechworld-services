@@ -1,81 +1,115 @@
 ---
 const caseStudies = [
   {
-    tag: "E-Commerce & Retail",
-    title: "Multi-Channel Retail Marketplace Integration & Web Store Management",
-    client: "Adil Supermarket E-Commerce (adilstore.com & bh.adilstore.com)",
-    impact: "+100% Marketplace Sync",
-    description: "Managed live e-commerce catalog operations, price rule updates, and promotional banner campaigns across primary Magento/Shopify stores while maintaining real-time inventory sync on Noon, Carrefour, ElGrocer, and InstaShop.",
-    highlights: ["Shopify & Magento", "Noon & Carrefour", "ElGrocer & InstaShop", "Catalog Operations"]
+    tag: "Custom E-Commerce Storefront",
+    title: "NatureNestGifts Full Setup & Handcrafted Candle E-Com Build",
+    client: "NatureNestGifts",
+    link: "https://NatureNestGifts.vercel.app",
+    linkText: "Launch Live Site ↗",
+    icon: "🕯️",
+    badge: "Independent E-Com Build",
+    description: "Designed and built an independent handcrafted candle e-commerce website from the ground up. Handled platform architecture, UI layouts, graphic banners, product mockups, and end-to-end digital marketing.",
+    highlights: ["Brand Creation", "Independent E-Com Setup", "Product Graphics", "Digital Marketing"]
   },
   {
-    tag: "AI & Cloud Automation",
-    title: "Local LLM Infrastructure & Incident Triage Automation",
-    client: "Internal Engineering Workbench",
-    impact: "-60% API Expense",
-    description: "Built custom Python automation scripts powered by DeepSeek and Ollama to parse network schematics, automate database audits, and triage server outage logs completely offline, eliminating cloud telemetry risks.",
-    highlights: ["DeepSeek R1", "Qwen 3.6 VLM", "Python Automation", "Ollama CLI"]
+    tag: "Content Hub & Environmental Media",
+    title: "TheSocialTraveller Media Platform & Documentary Action Portal",
+    client: "TheSocialTraveller",
+    link: "https://thesocialtraveller-demo.vercel.app",
+    linkText: "Launch Live Site ↗",
+    icon: "🌍",
+    badge: "Scenic Travel & Environmental Action",
+    description: "Designed an interactive documentary portal showcasing travel logs and environmental cleanup campaigns with structured map indexers, high-resolution media galleries, and video embeds.",
+    highlights: ["Next.js & Tailwind", "Video Integration", "Map Indexers", "Media Platform"]
   },
   {
-    tag: "Technical SEO & Edge Web",
-    title: "90+ Article Knowledge Base with Real-Time IndexNow Pipeline",
-    client: "PraveenTechWorld (praveentechworld.com)",
-    impact: "389 Pages Indexed",
-    description: "Engineered a high-performance Astro technical publication from scratch. Configured GA4 event tracking, Google Search Console, and automated IndexNow protocol triggers that broadcast content updates instantly to Bing and search crawlers.",
-    highlights: ["Astro Framework", "IndexNow Protocol", "GA4 Analytics", "Pagefind Search"]
+    tag: "AI & Tech Knowledge Engine",
+    title: "PTW Content Engine, GA4 & Technical SEO Infrastructure",
+    client: "PraveenTechWorld",
+    link: "https://www.praveentechworld.com",
+    linkText: "Explore Tech Portal ↗",
+    icon: "🤖",
+    badge: "Founder & Content Engine Builder",
+    description: "Built and self-manage a personal technology knowledge base (389 static HTML pages). Configured automated IndexNow search triggers, Google Analytics 4 tracking, Search Console indexers, and SVG graphic assets.",
+    highlights: ["Astro & Tailwind", "Automated SEO Pipelines", "IndexNow Trigger", "GA4 Event Tracking"]
+  },
+  {
+    tag: "Multi-Channel Retail E-Commerce",
+    title: "35+ Retail Branches Magento/Shopify & Marketplace Sync",
+    client: "Adil Supermarket E-Commerce",
+    link: "https://adilstore.com",
+    linkText: "Visit E-Com Platform ↗",
+    icon: "🛒",
+    badge: "Noon & Carrefour Marketplace Sync",
+    description: "Managed live e-commerce catalog operations, price rules, and promo banners across primary Magento/Shopify stores while maintaining real-time stock sync on Noon, Carrefour, ElGrocer, and InstaShop.",
+    highlights: ["Shopify & Magento", "Noon & Carrefour", "ElGrocer & InstaShop", "Power BI Dashboards"]
   }
 ];
 ---
 
-<section id="case-studies" class="py-24 px-4 sm:px-6 lg:px-8 relative bg-slate-100/60 dark:bg-gray-950/40">
+<section id="case-studies" class="py-24 px-4 sm:px-6 lg:px-8 relative bg-slate-100/60 dark:bg-gray-950/40 scroll-reveal">
   <div class="mx-auto max-w-7xl">
     
     <!-- Section Header -->
     <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
       <span class="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-50 dark:bg-emerald-500/10 px-4 py-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300 shadow-sm">
-        💼 Proven Project Execution & Impact
+        💼 Live Platforms & Real-World Projects
       </span>
       <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
-        Real-World <span class="gradient-text">Case Studies & Impact</span>
+        Featured <span class="gradient-text">Platforms & Live Projects</span>
       </h2>
       <p class="text-base text-slate-600 dark:text-gray-400 leading-relaxed font-medium">
-        A look at live platforms, e-commerce networks, and technical automation tools built and operated on our engineering workbench.
+        Explore live independent e-commerce storefronts, environmental content hubs, retail networks, and AI knowledge engines built from the ground up:
       </p>
     </div>
 
-    <!-- Case Studies Cards Grid -->
-    <div class="grid gap-8 lg:grid-cols-3">
+    <!-- Case Studies Cards Grid with Inspira 3D Tilt & Animate UI Border Beam -->
+    <div class="grid gap-8 md:grid-cols-2">
       {caseStudies.map((cs) => (
-        <div class="glass-card spotlight-card rounded-3xl p-8 flex flex-col justify-between border border-slate-200 dark:border-gray-800/80 hover:border-emerald-500/40 transition-all">
+        <div class="glass-card spotlight-card tilt-card border-beam rounded-3xl p-8 flex flex-col justify-between border border-slate-200 dark:border-gray-800/80 hover:border-indigo-500/50 transition-all scroll-reveal">
           <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 tracking-wider uppercase">
+            <!-- Header Badges -->
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+              <span class="text-xs font-mono font-bold text-indigo-600 dark:text-indigo-400 tracking-wider uppercase">
                 {cs.tag}
               </span>
-              <span class="rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 text-xs font-bold text-emerald-700 dark:text-emerald-300">
-                {cs.impact}
+              <span class="rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 text-[11px] font-bold text-emerald-700 dark:text-emerald-300">
+                {cs.badge}
               </span>
             </div>
 
-            <h3 class="text-xl font-extrabold text-slate-900 dark:text-white mb-2 leading-snug">
-              {cs.title}
-            </h3>
-
-            <div class="text-xs font-semibold text-slate-500 dark:text-gray-400 mb-4">
-              📍 {cs.client}
+            <!-- Icon & Title -->
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-3xl p-2 rounded-2xl bg-indigo-50 dark:bg-gray-900 border border-indigo-100 dark:border-gray-800">{cs.icon}</span>
+              <div>
+                <h3 class="text-xl font-extrabold text-slate-900 dark:text-white leading-snug">
+                  {cs.title}
+                </h3>
+                <div class="text-xs font-semibold text-slate-500 dark:text-gray-400 mt-0.5">
+                  🏢 {cs.client}
+                </div>
+              </div>
             </div>
 
+            <!-- Description -->
             <p class="text-sm text-slate-600 dark:text-gray-300 leading-relaxed mb-6 font-medium">
               {cs.description}
             </p>
           </div>
 
-          <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-200 dark:border-gray-800/80">
-            {cs.highlights.map((h) => (
-              <span class="rounded-lg bg-slate-100 dark:bg-gray-800/80 px-2.5 py-1 text-[11px] font-bold text-slate-700 dark:text-gray-300 border border-slate-200 dark:border-gray-700/50">
-                {h}
-              </span>
-            ))}
+          <!-- Footer Tech Chips & Live Launch Link -->
+          <div class="pt-6 border-t border-slate-200 dark:border-gray-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="flex flex-wrap gap-1.5">
+              {cs.highlights.map((h) => (
+                <span class="rounded-lg bg-slate-100 dark:bg-gray-800/80 px-2.5 py-1 text-[11px] font-bold text-slate-700 dark:text-gray-300 border border-slate-200 dark:border-gray-700/50">
+                  {h}
+                </span>
+              ))}
+            </div>
+
+            <a href={cs.link} target="_blank" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-500 px-4 py-2.5 text-xs font-bold text-white shadow-md hover:scale-105 transition-all shrink-0">
+              {cs.linkText}
+            </a>
           </div>
         </div>
       ))}
