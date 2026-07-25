@@ -2,13 +2,20 @@
 
 @layer base {
   :root {
-    --bg-dark: #070a12;
-    --text-main: #f3f4f6;
+    --bg-light: #f8fafc;
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --card-border: rgba(226, 232, 240, 1);
+    --accent-indigo: #4f46e5;
+    --accent-emerald: #059669;
+    --accent-cyan: #0284c7;
+    --accent-amber: #d97706;
   }
 
   html {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    background-color: var(--bg-dark);
+    background-color: var(--bg-light);
     color: var(--text-main);
     transition: background-color 0.3s ease, color 0.3s ease;
   }
@@ -16,78 +23,118 @@
   body {
     overflow-x: hidden;
     min-height: 100vh;
+    background-color: var(--bg-light);
+    color: var(--text-main);
   }
 }
 
-/* Light Mode Overrides */
-html.light {
-  background-color: #f8fafc !important;
-  color: #0f172a !important;
+/* Light Mode (DEFAULT) Glassmorphism & Card System */
+.glass-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(226, 232, 240, 1);
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.08);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
 }
 
-html.light body {
-  background-color: #f8fafc !important;
-  color: #0f172a !important;
-}
-
-html.light .glass-card {
-  background: rgba(255, 255, 255, 0.85);
-  border-color: rgba(0, 0, 0, 0.08);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
-}
-
-html.light .glass-card:hover {
+.glass-card:hover {
   border-color: rgba(99, 102, 241, 0.5);
-  box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.15);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.18);
 }
 
-html.light .glass-nav {
-  background: rgba(248, 250, 252, 0.9);
-  border-bottom-color: rgba(0, 0, 0, 0.08);
+.glass-nav {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(226, 232, 240, 1);
 }
 
-html.light .gradient-text {
+.gradient-text {
   background: linear-gradient(135deg, #4f46e5 0%, #0284c7 50%, #059669 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-html.light .text-white {
-  color: #0f172a !important;
+/* Mouse Spotlight Effect */
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(99, 102, 241, 0.25), transparent 40%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }
 
-html.light .text-gray-300 {
-  color: #334155 !important;
+.spotlight-card:hover::before {
+  opacity: 1;
 }
 
-html.light .text-gray-400 {
-  color: #475569 !important;
+/* DARK MODE OVERRIDES (When .dark class is added) */
+html.dark {
+  background-color: #070a12 !important;
+  color: #f3f4f6 !important;
 }
 
-html.light .text-gray-200 {
-  color: #1e293b !important;
+html.dark body {
+  background-color: #070a12 !important;
+  color: #f3f4f6 !important;
 }
 
-html.light .bg-gray-950\/40,
-html.light .bg-gray-950\/60 {
-  background-color: rgba(241, 245, 249, 0.8) !important;
+html.dark .glass-card {
+  background: rgba(13, 19, 32, 0.65) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.6) !important;
 }
 
-html.light .bg-gray-900\/80,
-html.light .bg-gray-900\/60,
-html.light .bg-gray-900\/90 {
-  background-color: rgba(255, 255, 255, 0.9) !important;
+html.dark .glass-card:hover {
+  border-color: rgba(99, 102, 241, 0.45) !important;
+  box-shadow: 0 30px 60px -15px rgba(99, 102, 241, 0.3) !important;
 }
 
-html.light .bg-gray-950 {
-  background-color: #ffffff !important;
+html.dark .glass-nav {
+  background: rgba(7, 10, 18, 0.85) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
 }
 
-html.light .border-gray-800,
-html.light .border-gray-800\/80,
-html.light .border-gray-700,
-html.light .border-gray-700\/80 {
-  border-color: rgba(226, 232, 240, 1) !important;
+html.dark .gradient-text {
+  background: linear-gradient(135deg, #a5b4fc 0%, #38bdf8 50%, #34d399 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+html.dark .text-slate-900,
+html.dark .text-slate-800,
+html.dark .text-gray-900 {
+  color: #f8fafc !important;
+}
+
+html.dark .text-slate-700,
+html.dark .text-slate-600,
+html.dark .text-gray-700,
+html.dark .text-gray-600 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .bg-slate-50,
+html.dark .bg-slate-100,
+html.dark .bg-gray-50,
+html.dark .bg-white {
+  background-color: rgba(15, 23, 42, 0.8) !important;
+}
+
+html.dark .border-slate-200,
+html.dark .border-gray-200 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* Lenis Smooth Scroll System */
@@ -111,57 +158,6 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
-/* Inspira UI & Animate UI Glassmorphism & Spotlight System */
-.glass-card {
-  background: rgba(13, 19, 32, 0.65);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.6);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.glass-card:hover {
-  border-color: rgba(99, 102, 241, 0.45);
-  transform: translateY(-6px) scale(1.01);
-  box-shadow: 0 30px 60px -15px rgba(99, 102, 241, 0.3);
-}
-
-/* Mouse Spotlight Effect */
-.spotlight-card::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(99, 102, 241, 0.35), transparent 40%);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.spotlight-card:hover::before {
-  opacity: 1;
-}
-
-.glass-nav {
-  background: rgba(7, 10, 18, 0.85);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, #a5b4fc 0%, #38bdf8 50%, #34d399 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 /* Shimmer Button Effect (Inspira UI) */
 .btn-shimmer {
   position: relative;
@@ -178,7 +174,7 @@ html.lenis, html.lenis body {
   background: linear-gradient(
     60deg,
     transparent 30%,
-    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.35) 50%,
     transparent 70%
   );
   transform: rotate(30deg);
@@ -215,8 +211,8 @@ html.lenis, html.lenis body {
 }
 
 @keyframes pulseGlow {
-  0%, 100% { opacity: 0.35; transform: scale(1); }
-  50% { opacity: 0.65; transform: scale(1.1); }
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.1); }
 }
 
 .animate-pulse-glow {
