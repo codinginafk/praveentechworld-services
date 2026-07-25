@@ -1,0 +1,221 @@
+---
+---
+
+<div class="absolute inset-0 pointer-events-none overflow-hidden z-0 w-full h-full min-h-[550px]">
+  <canvas id="bubble-canvas" class="w-full h-full block opacity-90 dark:opacity-75"></canvas>
+</div>
+
+<script>
+  import * as THREE from 'three';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('bubble-canvas') as HTMLCanvasElement;
+    if (!canvas) return;
+
+    const parent = canvas.parentElement;
+    if (!parent) return;
+
+    let width = parent.offsetWidth || window.innerWidth;
+    let height = parent.offsetHeight || window.innerHeight;
+    const isMobile = window.innerWidth < 768;
+
+    // 1. Scene & Camera Setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, width / height, 1, 1000);
+    camera.position.set(0, 0, 260);
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+    });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // 2. Soap Bubble 3D Physics System
+    const bubbleCount = isMobile ? 120 : 260;
+
+    const positions = new Float32Array(bubbleCount * 3);
+    const velocities = new Float32Array(bubbleCount * 3); // VX, VY, VZ
+    const colors = new Float32Array(bubbleCount * 3);
+    const baseScales = new Float32Array(bubbleCount);
+
+    // Iridescent Soap Bubble Palette (Cyan, Luminous Violet, Rose Pearl)
+    const colorCyan = new THREE.Color('#06b6d4');
+    const colorViolet = new THREE.Color('#a855f7');
+    const colorRose = new THREE.Color('#f43f5e');
+
+    for (let i = 0; i < bubbleCount; i++) {
+      const idx = i * 3;
+      positions[idx] = (Math.random() - 0.5) * 650;      // X
+      positions[idx + 1] = Math.random() * 500 - 100;     // Y
+      positions[idx + 2] = (Math.random() - 0.5) * 350;  // Z
+
+      velocities[idx] = (Math.random() - 0.5) * 0.2;     // VX
+      velocities[idx + 1] = - (0.4 + Math.random() * 0.6); // VY (Falling from top)
+      velocities[idx + 2] = (Math.random() - 0.5) * 0.2; // VZ
+
+      baseScales[i] = 2.5 + Math.random() * 3.5;
+
+      // Random Iridescent Bubble Color Selection
+      const randColor = Math.random();
+      let c = new THREE.Color();
+      if (randColor < 0.35) c.copy(colorCyan);
+      else if (randColor < 0.7) c.copy(colorViolet);
+      else c.copy(colorRose);
+
+      colors[idx] = c.r;
+      colors[idx + 1] = c.g;
+      colors[idx + 2] = c.b;
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    // Soft Glowing Bubble Material
+    const material = new THREE.PointsMaterial({
+      vertexColors: true,
+      size: isMobile ? 3.5 : 4.2,
+      transparent: true,
+      opacity: 0.8,
+      blending: THREE.AdditiveBlending,
+    });
+
+    const bubbles = new THREE.Points(geometry, material);
+    scene.add(bubbles);
+
+    // 3. Mouse & Touch Repulsion Force Field ("Move Away From Mouse")
+    const raycaster = new THREE.Raycaster();
+    const mousePlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+    const mouseWorld = new THREE.Vector3(0, -999, 0);
+
+    function updateCursor(clientX: number, clientY: number) {
+      const rect = canvas.getBoundingClientRect();
+      const mouseVec = new THREE.Vector2(
+        ((clientX - rect.left) / rect.width) * 2 - 1,
+        -((clientY - rect.top) / rect.height) * 2 + 1
+      );
+
+      raycaster.setFromCamera(mouseVec, camera);
+      raycaster.ray.intersectPlane(mousePlane, mouseWorld);
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      updateCursor(e.clientX, e.clientY);
+    }, { passive: true });
+
+    document.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        updateCursor(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }, { passive: true });
+
+    // Click Shockwave Burst
+    const shockwaves: { x: number; y: number; radius: number; maxRadius: number; force: number }[] = [];
+
+    document.addEventListener('click', () => {
+      if (mouseWorld.y !== -999) {
+        shockwaves.push({
+          x: mouseWorld.x,
+          y: mouseWorld.y,
+          radius: 0,
+          maxRadius: 180,
+          force: 18,
+        });
+      }
+    }, { passive: true });
+
+    // Resize Handler
+    function updateSize() {
+      if (!parent) return;
+      width = parent.offsetWidth || window.innerWidth;
+      height = parent.offsetHeight || window.innerHeight;
+
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    }
+
+    window.addEventListener('resize', updateSize);
+
+    // 4. Soap Bubble Physics & Repulsion Animation Loop
+    let time = 0;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      time += 0.015;
+
+      // Update Shockwaves
+      for (let s = shockwaves.length - 1; s >= 0; s--) {
+        const sw = shockwaves[s];
+        sw.radius += 4.5;
+        sw.force *= 0.94;
+        if (sw.radius > sw.maxRadius || sw.force < 0.1) {
+          shockwaves.splice(s, 1);
+        }
+      }
+
+      const posAttr = bubbles.geometry.attributes.position;
+      const posArray = posAttr.array as Float32Array;
+
+      for (let i = 0; i < bubbleCount; i++) {
+        const idx = i * 3;
+
+        // Base Falling & Oscillating Physics
+        posArray[idx] += velocities[idx] + Math.sin(time + i) * 0.25; // Gentle X sway
+        posArray[idx + 1] += velocities[idx + 1];                     // Falling Y
+        posArray[idx + 2] += velocities[idx + 2];                     // Z float
+
+        // Damping velocities back to base falling speed
+        velocities[idx] *= 0.95;
+        velocities[idx + 1] += (- (0.4 + (i % 5) * 0.1) - velocities[idx + 1]) * 0.05;
+        velocities[idx + 2] *= 0.95;
+
+        // MOUSE REPULSION FORCE FIELD ("Move Away From Cursor")
+        if (mouseWorld.y !== -999) {
+          const dx = posArray[idx] - mouseWorld.x;
+          const dy = posArray[idx + 1] - mouseWorld.y;
+          const distSq = dx * dx + dy * dy;
+
+          if (distSq < 14000) { // Repulsion radius
+            const dist = Math.sqrt(distSq);
+            const pushForce = (1 - dist / 118) * 4.5;
+            
+            // Push bubble away outwards along normal vector
+            velocities[idx] += (dx / dist) * pushForce;
+            velocities[idx + 1] += (dy / dist) * pushForce;
+          }
+        }
+
+        // CLICK SHOCKWAVE REPULSION
+        for (let s = 0; s < shockwaves.length; s++) {
+          const sw = shockwaves[s];
+          const sdx = posArray[idx] - sw.x;
+          const sdy = posArray[idx + 1] - sw.y;
+          const sdist = Math.sqrt(sdx * sdx + sdy * sdy);
+          const waveDist = Math.abs(sdist - sw.radius);
+
+          if (waveDist < 30) {
+            const push = (1 - waveDist / 30) * sw.force;
+            velocities[idx] += (sdx / (sdist || 1)) * push;
+            velocities[idx + 1] += (sdy / (sdist || 1)) * push;
+          }
+        }
+
+        // Loop bubbles back to top when falling below bottom bound
+        if (posArray[idx + 1] < -220) {
+          posArray[idx + 1] = 250 + Math.random() * 40;
+          posArray[idx] = (Math.random() - 0.5) * 650;
+        }
+      }
+
+      posAttr.needsUpdate = true;
+      bubbles.rotation.y = time * 0.03;
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  });
+</script>
