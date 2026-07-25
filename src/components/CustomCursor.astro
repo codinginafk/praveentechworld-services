@@ -4,23 +4,23 @@
 <!-- Floating Cursor Mode Control Badge -->
 <div class="fixed bottom-6 right-6 z-[99990] flex items-center gap-1.5 p-1.5 rounded-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border border-slate-300 dark:border-gray-700 shadow-xl text-xs font-bold text-slate-800 dark:text-gray-200">
   <span class="pl-2.5 text-[11px] font-mono uppercase text-indigo-600 dark:text-indigo-400">Cursor:</span>
-  <button id="cursor-mode-magic" title="Movie Magic Wand Mode" class="cursor-mode-btn active px-2.5 py-1 rounded-full text-xs transition-all bg-indigo-600 text-white cursor-pointer">
-    ✨ Magic
+  <button id="cursor-mode-pro" title="Minimal Pro Precision Ring (Default)" class="cursor-mode-btn active px-2.5 py-1 rounded-full text-xs transition-all bg-indigo-600 text-white cursor-pointer">
+    🎯 Pro
+  </button>
+  <button id="cursor-mode-magic" title="Movie Magic Wand & Celestial Spell Mode" class="cursor-mode-btn px-2.5 py-1 rounded-full text-xs transition-all hover:bg-slate-100 dark:hover:bg-gray-800 cursor-pointer">
+    🪄 Magic
   </button>
   <button id="cursor-mode-pet" title="Playful Pet Paw Mode" class="cursor-mode-btn px-2.5 py-1 rounded-full text-xs transition-all hover:bg-slate-100 dark:hover:bg-gray-800 cursor-pointer">
     🐾 Pet
-  </button>
-  <button id="cursor-mode-pro" title="Minimal Precision Ring" class="cursor-mode-btn px-2.5 py-1 rounded-full text-xs transition-all hover:bg-slate-100 dark:hover:bg-gray-800 cursor-pointer">
-    🎯 Pro
   </button>
 </div>
 
 <!-- Hardware-Accelerated Lightweight Custom Cursor -->
 <div id="cursor-dot" class="pointer-events-none fixed top-0 left-0 z-[99999] text-base leading-none opacity-0 transition-opacity duration-300 hidden md:flex items-center justify-center" style="will-change: transform;">
-  <span id="cursor-dot-icon">✨</span>
+  <span id="cursor-dot-icon" class="text-xs font-bold text-indigo-600 dark:text-indigo-400">•</span>
 </div>
 
-<div id="cursor-ring" class="pointer-events-none fixed top-0 left-0 z-[99998] h-9 w-9 rounded-full border-2 border-indigo-500/50 dark:border-indigo-400/50 opacity-0 transition-opacity duration-300 hidden md:block" style="will-change: transform; transition: transform 0.08s ease-out, border-color 0.2s, background-color 0.2s;"></div>
+<div id="cursor-ring" class="pointer-events-none fixed top-0 left-0 z-[99998] h-8 w-8 rounded-full border border-indigo-500/50 dark:border-indigo-400/50 opacity-0 transition-opacity duration-300 hidden md:block" style="will-change: transform; transition: transform 0.08s ease-out, border-color 0.2s, background-color 0.2s;"></div>
 
 <script is:inline>
   document.addEventListener('DOMContentLoaded', () => {
@@ -28,22 +28,22 @@
     const dotIcon = document.getElementById('cursor-dot-icon');
     const ring = document.getElementById('cursor-ring');
 
+    const btnPro = document.getElementById('cursor-mode-pro');
     const btnMagic = document.getElementById('cursor-mode-magic');
     const btnPet = document.getElementById('cursor-mode-pet');
-    const btnPro = document.getElementById('cursor-mode-pro');
 
     if (!dot || !ring || !dotIcon) return;
 
-    let currentMode = localStorage.getItem('cursor_mode') || 'magic';
+    // DEFAULT MODE IS NOW 'pro'
+    let currentMode = localStorage.getItem('cursor_mode') || 'pro';
     let isVisible = false;
     let lastSparkleTime = 0;
 
-    // Apply Saved Mode
     function setCursorMode(mode) {
       currentMode = mode;
       localStorage.setItem('cursor_mode', mode);
 
-      [btnMagic, btnPet, btnPro].forEach((b) => {
+      [btnPro, btnMagic, btnPet].forEach((b) => {
         if (!b) return;
         b.classList.remove('bg-indigo-600', 'text-white');
         b.classList.add('hover:bg-slate-100', 'dark:hover:bg-gray-800');
@@ -51,26 +51,26 @@
 
       if (mode === 'magic') {
         if (btnMagic) btnMagic.classList.add('bg-indigo-600', 'text-white');
-        dotIcon.textContent = '✨';
-        ring.style.borderColor = 'rgba(99, 102, 241, 0.6)';
+        dotIcon.textContent = '🪄';
+        ring.style.borderColor = 'rgba(168, 85, 247, 0.7)'; // Purple Magic
       } else if (mode === 'pet') {
         if (btnPet) btnPet.classList.add('bg-indigo-600', 'text-white');
         dotIcon.textContent = '🐾';
-        ring.style.borderColor = 'rgba(236, 72, 153, 0.6)';
+        ring.style.borderColor = 'rgba(236, 72, 153, 0.7)'; // Pink Pet
       } else {
         if (btnPro) btnPro.classList.add('bg-indigo-600', 'text-white');
         dotIcon.textContent = '•';
-        ring.style.borderColor = 'rgba(2, 132, 199, 0.6)';
+        ring.style.borderColor = 'rgba(99, 102, 241, 0.6)'; // Indigo Pro
       }
     }
 
     setCursorMode(currentMode);
 
+    if (btnPro) btnPro.addEventListener('click', () => setCursorMode('pro'));
     if (btnMagic) btnMagic.addEventListener('click', () => setCursorMode('magic'));
     if (btnPet) btnPet.addEventListener('click', () => setCursorMode('pet'));
-    if (btnPro) btnPro.addEventListener('click', () => setCursorMode('pro'));
 
-    // Hardware-Accelerated Position Tracking
+    // Hardware-Accelerated Position Tracking (Zero CPU Lag)
     window.addEventListener('mousemove', (e) => {
       const x = e.clientX;
       const y = e.clientY;
@@ -82,30 +82,28 @@
       }
 
       dot.style.transform = `translate3d(${x - 8}px, ${y - 8}px, 0)`;
-      ring.style.transform = `translate3d(${x - 18}px, ${y - 18}px, 0)`;
+      ring.style.transform = `translate3d(${x - 16}px, ${y - 16}px, 0)`;
 
-      // Spawn Magic Sparkles or Pet Paw Dust Trails
+      // Spawn Trail Dust Particles for Magic or Pet modes
       const now = Date.now();
-      if (now - lastSparkleTime > 70) {
+      if (currentMode !== 'pro' && now - lastSparkleTime > 65) {
         lastSparkleTime = now;
         spawnTrailParticle(x, y);
       }
     }, { passive: true });
 
-    // Spawn Trail Particle Effect
+    // Spawn Creative Celestial Movie Magic & Pet Dust Particles
     function spawnTrailParticle(x, y) {
-      if (currentMode === 'pro') return;
-
       const p = document.createElement('div');
       p.className = 'cursor-trail-particle';
       p.style.left = `${x}px`;
       p.style.top = `${y}px`;
 
       if (currentMode === 'magic') {
-        const sparkles = ['✨', '⭐', '💫', '🌟'];
-        p.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+        const magicSpell = ['🪄', '🔮', '✨', '⭐', '🌙', '💫', '🌌', '⚡'];
+        p.textContent = magicSpell[Math.floor(Math.random() * magicSpell.length)];
       } else if (currentMode === 'pet') {
-        const petTrail = ['🐾', '🐱', '💖', '✨'];
+        const petTrail = ['🐾', '🐱', '💖', '🐾', '✨'];
         p.textContent = petTrail[Math.floor(Math.random() * petTrail.length)];
       }
 
@@ -113,15 +111,18 @@
 
       setTimeout(() => {
         p.remove();
-      }, 500);
+      }, 450);
     }
 
-    // Hover Scaling & Magnetic State over Interactive Elements
+    // Hover Scaling & Target Focus
     document.addEventListener('mouseover', (e) => {
       const target = e.target;
       if (target.closest('a, button, select, input, textarea, .glass-card, .tilt-card')) {
-        ring.style.transform += ' scale(1.6)';
-        if (currentMode === 'pet') {
+        ring.style.transform += ' scale(1.5)';
+        if (currentMode === 'magic') {
+          ring.style.borderColor = 'rgba(168, 85, 247, 0.9)';
+          ring.style.backgroundColor = 'rgba(168, 85, 247, 0.15)';
+        } else if (currentMode === 'pet') {
           ring.style.borderColor = 'rgba(236, 72, 153, 0.9)';
           ring.style.backgroundColor = 'rgba(236, 72, 153, 0.15)';
         } else {
