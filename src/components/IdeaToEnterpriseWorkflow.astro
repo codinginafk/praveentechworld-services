@@ -1,0 +1,88 @@
+---
+const fourSteps = [
+  {
+    step: "01",
+    title: "Discovery",
+    badge: "Phase 1",
+    description: "We learn your business inside and out — your workflows, pain points, and goals — to find the highest-impact AI & digital growth opportunities.",
+    typical: "Typical: 2-3 calls + async audit",
+    icon: "🔍"
+  },
+  {
+    step: "02",
+    title: "Strategy",
+    badge: "Phase 2",
+    description: "We design the right solution with a clear roadmap, timeline, and ROI projection so you know exactly what to expect.",
+    typical: "Deliverable: Technical spec + ROI model",
+    icon: "🗺️"
+  },
+  {
+    step: "03",
+    title: "Build & Engineer",
+    badge: "Phase 3",
+    description: "We develop and test custom AI automation scripts, video ad creatives, marketplace catalog integrations, or edge web builds with sub-second performance.",
+    typical: "Deliverable: Production-ready code & assets",
+    icon: "⚡"
+  },
+  {
+    step: "04",
+    title: "Deploy & Scale",
+    badge: "Phase 4",
+    description: "We launch to live production, set up conversion tracking analytics, and scale your campaigns as part of a long-term relationship opportunity.",
+    typical: "Deliverable: Live system + GA4 analytics & support",
+    icon: "🚀"
+  }
+];
+---
+
+<section id="workflow" class="py-24 px-4 sm:px-6 lg:px-8 relative bg-slate-100/60 dark:bg-gray-950/50 scroll-reveal">
+  <div class="mx-auto max-w-5xl space-y-16">
+    
+    <!-- Section Header -->
+    <div class="text-center max-w-3xl mx-auto space-y-4">
+      <span class="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-50 dark:bg-purple-500/10 px-4 py-1.5 text-xs font-bold text-purple-700 dark:text-purple-300 shadow-sm">
+        ⚡ Structured Engineering Execution
+      </span>
+      <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
+        From Idea to Impact in <span class="gradient-text">4 Steps</span>
+      </h2>
+      <p class="text-base text-slate-600 dark:text-gray-400 leading-relaxed font-medium">
+        How we transform initial business concepts into high-impact production systems:
+      </p>
+    </div>
+
+    <!-- 4-Step Process Grid -->
+    <div class="grid gap-6 md:grid-cols-2">
+      {fourSteps.map((s) => (
+        <div class="glass-card spotlight-card border-beam rounded-3xl p-8 border border-slate-200 dark:border-gray-800 flex flex-col justify-between hover:border-purple-500/50 transition-all scroll-reveal space-y-6">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-purple-600 via-cyan-500 to-pink-500 text-white font-mono font-black text-xl shadow-lg">
+                {s.step}
+              </span>
+              <span class="rounded-full bg-purple-50 dark:bg-purple-950/40 border border-purple-500/30 px-3 py-1 text-xs font-bold text-purple-700 dark:text-purple-300">
+                {s.badge}
+              </span>
+            </div>
+
+            <div class="flex items-center gap-2.5">
+              <span class="text-2xl">{s.icon}</span>
+              <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">{s.title}</h3>
+            </div>
+
+            <p class="text-sm text-slate-600 dark:text-gray-300 leading-relaxed font-medium">
+              {s.description}
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-slate-200 dark:border-gray-800">
+            <span class="inline-flex items-center gap-2 rounded-xl bg-slate-100 dark:bg-gray-900 px-3.5 py-2 text-xs font-mono font-bold text-purple-700 dark:text-purple-300 border border-slate-200 dark:border-gray-800">
+              📌 {s.typical}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
