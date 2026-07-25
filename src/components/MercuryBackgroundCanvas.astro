@@ -1,8 +1,8 @@
 ---
 ---
 
-<div class="absolute inset-0 pointer-events-none overflow-hidden z-0 w-full h-full min-h-[500px]">
-  <canvas id="mercury-canvas" class="w-full h-full block opacity-90 dark:opacity-75"></canvas>
+<div class="absolute inset-0 pointer-events-none overflow-hidden z-0 w-full h-full min-h-[550px]">
+  <canvas id="mercury-canvas" class="w-full h-full block opacity-95 dark:opacity-80"></canvas>
 </div>
 
 <script>
@@ -18,10 +18,12 @@
     let width = parent.offsetWidth || window.innerWidth;
     let height = parent.offsetHeight || window.innerHeight;
 
+    const isMobile = window.innerWidth < 768;
+
     // 1. Scene, Camera, Renderer
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(60, width / height, 1, 1000);
-    camera.position.set(0, 110, 220);
+    const camera = new THREE.PerspectiveCamera(55, width / height, 1, 1000);
+    camera.position.set(0, 115, 230);
     camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({
@@ -32,58 +34,87 @@
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // 2. High-Density Particle Wave Grid
-    const isMobile = window.innerWidth < 768;
-    const numX = isMobile ? 60 : 85;
-    const numZ = isMobile ? 60 : 85;
+    // 2. High-Density Particle Wave Grid with Dynamic Vertex Colors (ChaseAI Palette)
+    const numX = isMobile ? 65 : 90;
+    const numZ = isMobile ? 65 : 90;
     const numParticles = numX * numZ;
 
     const positions = new Float32Array(numParticles * 3);
+    const colors = new Float32Array(numParticles * 3);
     const separation = isMobile ? 9 : 8;
+
+    // ChaseAI Palette RGBs
+    const colorViolet = new THREE.Color('#8b5cf6'); // Electric Violet
+    const colorCyan = new THREE.Color('#06b6d4');   // Cyber Cyan
+    const colorMagenta = new THREE.Color('#ec4899'); // Hot Magenta
+
     let i = 0;
 
     for (let ix = 0; ix < numX; ix++) {
       for (let iz = 0; iz < numZ; iz++) {
+        // Position
         positions[i] = ix * separation - (numX * separation) / 2;
         positions[i + 1] = 0;
         positions[i + 2] = iz * separation - (numZ * separation) / 2;
+
+        // Gradient Color Blend
+        const ratio = (ix / numX + iz / numZ) * 0.5;
+        let c = new THREE.Color();
+        if (ratio < 0.5) {
+          c.copy(colorViolet).lerp(colorCyan, ratio * 2);
+        } else {
+          c.copy(colorCyan).lerp(colorMagenta, (ratio - 0.5) * 2);
+        }
+
+        colors[i] = c.r;
+        colors[i + 1] = c.g;
+        colors[i + 2] = c.b;
+
         i += 3;
       }
     }
 
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-    // Colors matching font theme
-    const isDark = document.documentElement.classList.contains('dark');
-    const particleColor = isDark ? 0x818cf8 : 0x4f46e5;
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-      color: particleColor,
-      size: isMobile ? 2.0 : 1.8,
+      vertexColors: true,
+      size: isMobile ? 2.2 : 2.0,
       transparent: true,
-      opacity: isDark ? 0.7 : 0.65,
+      opacity: 0.85,
     });
 
     const particles = new THREE.Points(geometry, material);
     scene.add(particles);
 
-    // Floating Ambient Dust Nodes
-    const starCount = isMobile ? 150 : 300;
+    // Floating Ambient Dust Nodes (Cyan & Magenta Stars)
+    const starCount = isMobile ? 180 : 350;
     const starPositions = new Float32Array(starCount * 3);
+    const starColors = new Float32Array(starCount * 3);
+
     for (let k = 0; k < starCount * 3; k += 3) {
-      starPositions[k] = (Math.random() - 0.5) * 600;
-      starPositions[k + 1] = (Math.random() - 0.5) * 300;
-      starPositions[k + 2] = (Math.random() - 0.5) * 600;
+      starPositions[k] = (Math.random() - 0.5) * 650;
+      starPositions[k + 1] = (Math.random() - 0.5) * 350;
+      starPositions[k + 2] = (Math.random() - 0.5) * 650;
+
+      const sc = Math.random() > 0.5 ? colorCyan : colorMagenta;
+      starColors[k] = sc.r;
+      starColors[k + 1] = sc.g;
+      starColors[k + 2] = sc.b;
     }
+
     const starGeometry = new THREE.BufferGeometry();
     starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    starGeometry.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
+
     const starMaterial = new THREE.PointsMaterial({
-      color: isDark ? 0x38bdf8 : 0x0284c7,
-      size: 2.2,
+      vertexColors: true,
+      size: 2.5,
       transparent: true,
-      opacity: 0.5,
+      opacity: 0.6,
     });
+
     const stars = new THREE.Points(starGeometry, starMaterial);
     scene.add(stars);
 
@@ -126,14 +157,6 @@
 
     window.addEventListener('resize', updateSize);
 
-    // Theme Toggle Color Watcher
-    const observer = new MutationObserver(() => {
-      const isDark = document.documentElement.classList.contains('dark');
-      material.color.setHex(isDark ? 0x818cf8 : 0x4f46e5);
-      starMaterial.color.setHex(isDark ? 0x38bdf8 : 0x0284c7);
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
     // 4. Fluid 60 FPS Wave Physics Loop
     let count = 0;
 
@@ -150,7 +173,7 @@
           const pz = posArray[idx + 2];
 
           // Soothing breathing wave
-          let y = (Math.sin((ix + count) * 0.14) * 9.5) + (Math.cos((iz + count) * 0.14) * 9.5);
+          let y = (Math.sin((ix + count) * 0.14) * 10) + (Math.cos((iz + count) * 0.14) * 10);
 
           // Direct Cursor Magnetic Distortion
           if (mouseWorld.y !== -999) {
@@ -158,10 +181,10 @@
             const dz = pz - mouseWorld.z;
             const distSq = dx * dx + dz * dz;
 
-            if (distSq < 10000) {
+            if (distSq < 11000) {
               const dist = Math.sqrt(distSq);
-              const force = (1 - dist / 100);
-              y += Math.sin(dist * 0.16 - count * 3) * 16 * force;
+              const force = (1 - dist / 105);
+              y += Math.sin(dist * 0.16 - count * 3) * 18 * force;
             }
           }
 

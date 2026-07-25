@@ -5,16 +5,15 @@
     --bg-light: #f8fafc;
     --text-main: #0f172a;
     --text-muted: #475569;
-    --card-bg: rgba(255, 255, 255, 0.9);
+    --card-bg: rgba(255, 255, 255, 0.95);
     --card-border: rgba(226, 232, 240, 1);
-    --accent-indigo: #4f46e5;
-    --accent-emerald: #059669;
-    --accent-cyan: #0284c7;
-    --accent-amber: #d97706;
+    --accent-purple: #8b5cf6;
+    --accent-cyan: #06b6d4;
+    --accent-magenta: #ec4899;
   }
 
   html {
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     background-color: var(--bg-light);
     color: var(--text-main);
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -28,33 +27,9 @@
   }
 }
 
-/* Magical Cursor Particle Dust Trails */
-.cursor-trail-particle {
-  position: fixed;
-  pointer-events: none;
-  font-size: 14px;
-  line-height: 1;
-  user-select: none;
-  transform: translate(-50%, -50%) scale(1);
-  animation: trailFade 0.5s ease-out forwards;
-  will-change: transform, opacity;
-  z-index: 99995;
-}
-
-@keyframes trailFade {
-  0% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1) translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1.4) translateY(-14px);
-  }
-}
-
 /* Button & Click Micro-Interactions */
 button, a {
-  transition: transform 0.15s ease-out, background-color 0.2s ease;
+  transition: transform 0.15s ease-out, background-color 0.2s ease, border-color 0.2s ease;
   will-change: transform;
 }
 
@@ -66,11 +41,11 @@ button:active, a:active {
 .button-ripple-effect {
   position: fixed;
   pointer-events: none;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  border: 1.5px solid rgba(99, 102, 241, 0.8);
-  background: rgba(99, 102, 241, 0.15);
+  border: 1.5px solid rgba(139, 92, 246, 0.8);
+  background: rgba(139, 92, 246, 0.2);
   transform: translate(-50%, -50%) scale(0.3);
   animation: buttonRipple 0.4s ease-out forwards;
   will-change: transform, opacity;
@@ -84,7 +59,7 @@ button:active, a:active {
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(2.5);
+    transform: translate(-50%, -50%) scale(2.6);
   }
 }
 
@@ -92,20 +67,20 @@ button:active, a:active {
 #scroll-progress {
   position: fixed;
   top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #4f46e5 0%, #0284c7 50%, #059669 100%);
+  height: 3.5px;
+  background: linear-gradient(90deg, #8b5cf6 0%, #06b6d4 50%, #ec4899 100%);
   z-index: 9999;
   transform-origin: 0%;
   transform: scaleX(0);
   will-change: transform;
 }
 
-/* Apple-Style Scroll-Triggered Reveal Animations */
+/* Apple/ChaseAI-Style Scroll-Triggered Reveal Animations */
 .scroll-reveal {
   opacity: 0;
   transform: translateY(20px);
   will-change: opacity, transform;
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .scroll-reveal.revealed {
@@ -113,13 +88,13 @@ button:active, a:active {
   transform: translateY(0);
 }
 
-/* Optimized Lightweight Glassmorphism */
+/* ChaseAI Inspired High-Contrast Glassmorphism */
 .glass-card {
   background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(226, 232, 240, 1);
-  box-shadow: 0 10px 25px -10px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.08);
   transition: transform 0.25s ease-out, border-color 0.25s ease, box-shadow 0.25s ease;
   position: relative;
   overflow: hidden;
@@ -127,20 +102,20 @@ button:active, a:active {
 }
 
 .glass-card:hover {
-  border-color: rgba(99, 102, 241, 0.4);
+  border-color: rgba(139, 92, 246, 0.45);
   transform: translateY(-4px);
-  box-shadow: 0 16px 32px -10px rgba(99, 102, 241, 0.14);
+  box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.2);
 }
 
 .glass-nav {
   background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(226, 232, 240, 1);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #4f46e5 0%, #0284c7 50%, #059669 100%);
+  background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 50%, #ec4899 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -164,12 +139,12 @@ button:active, a:active {
   inset: -1px;
   border-radius: inherit;
   padding: 1.5px;
-  background: conic-gradient(from var(--beam-angle, 0deg), transparent 70%, #4f46e5 85%, #0284c7 95%, transparent 100%);
+  background: conic-gradient(from var(--beam-angle, 0deg), transparent 60%, #8b5cf6 80%, #06b6d4 90%, #ec4899 100%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
-  animation: borderBeamMove 8s linear infinite;
+  animation: borderBeamMove 7s linear infinite;
 }
 
 @keyframes borderBeamMove {
@@ -190,7 +165,7 @@ button:active, a:active {
   top: 0; left: 0; right: 0; bottom: 0;
   border-radius: inherit;
   padding: 1px;
-  background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(99, 102, 241, 0.2), transparent 40%);
+  background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(139, 92, 246, 0.25), transparent 40%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -203,35 +178,35 @@ button:active, a:active {
   opacity: 1;
 }
 
-/* DARK MODE OVERRIDES */
+/* CHASEAI DARK MODE (Deep Obsidian & Cyber Violet) */
 html.dark {
-  background-color: #070a12 !important;
-  color: #f3f4f6 !important;
+  background-color: #06070b !important;
+  color: #f8fafc !important;
 }
 
 html.dark body {
-  background-color: #070a12 !important;
-  color: #f3f4f6 !important;
+  background-color: #06070b !important;
+  color: #f8fafc !important;
 }
 
 html.dark .glass-card {
-  background: rgba(13, 19, 32, 0.75) !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 16px 40px -15px rgba(0, 0, 0, 0.6) !important;
+  background: rgba(11, 15, 25, 0.85) !important;
+  border-color: rgba(139, 92, 246, 0.2) !important;
+  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.8) !important;
 }
 
 html.dark .glass-card:hover {
-  border-color: rgba(99, 102, 241, 0.45) !important;
-  box-shadow: 0 24px 48px -15px rgba(99, 102, 241, 0.25) !important;
+  border-color: rgba(139, 92, 246, 0.6) !important;
+  box-shadow: 0 25px 60px -15px rgba(139, 92, 246, 0.35) !important;
 }
 
 html.dark .glass-nav {
-  background: rgba(7, 10, 18, 0.88) !important;
-  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+  background: rgba(6, 7, 11, 0.9) !important;
+  border-bottom-color: rgba(139, 92, 246, 0.2) !important;
 }
 
 html.dark .gradient-text {
-  background: linear-gradient(135deg, #a5b4fc 0%, #38bdf8 50%, #34d399 100%) !important;
+  background: linear-gradient(135deg, #c084fc 0%, #38bdf8 50%, #f472b6 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
 }
@@ -239,7 +214,7 @@ html.dark .gradient-text {
 html.dark .text-slate-900,
 html.dark .text-slate-800,
 html.dark .text-gray-900 {
-  color: #f8fafc !important;
+  color: #ffffff !important;
 }
 
 html.dark .text-slate-700,
@@ -253,12 +228,12 @@ html.dark .bg-slate-50,
 html.dark .bg-slate-100,
 html.dark .bg-gray-50,
 html.dark .bg-white {
-  background-color: rgba(15, 23, 42, 0.8) !important;
+  background-color: rgba(15, 23, 42, 0.85) !important;
 }
 
 html.dark .border-slate-200,
 html.dark .border-gray-200 {
-  border-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(139, 92, 246, 0.2) !important;
 }
 
 /* Lenis Smooth Scroll System */
@@ -273,7 +248,7 @@ html.lenis, html.lenis body {
 .ambient-glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
+  filter: blur(120px);
   pointer-events: none;
   z-index: 0;
 }
