@@ -20,6 +20,16 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
     
+    <!-- Inline Theme Initializer to prevent Flash of Unstyled Content (FOUC) -->
+    <script is:inline>
+      const storedTheme = localStorage.getItem('theme');
+      if (storedTheme === 'light') {
+        document.documentElement.classList.add('light');
+      } else {
+        document.documentElement.classList.remove('light');
+      }
+    </script>
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />

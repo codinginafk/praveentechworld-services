@@ -27,8 +27,19 @@
       </a>
     </nav>
 
-    <!-- CTAs -->
+    <!-- CTAs & Theme Toggle -->
     <div class="flex items-center gap-3">
+      <!-- Theme Toggle Button -->
+      <button
+        id="theme-toggle-btn"
+        type="button"
+        aria-label="Toggle Light and Dark Mode"
+        class="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-700/80 bg-gray-900/80 text-amber-400 hover:bg-gray-800 hover:border-indigo-500 transition-all cursor-pointer"
+      >
+        <span id="theme-toggle-icon-dark" class="text-base">🌙</span>
+        <span id="theme-toggle-icon-light" class="hidden text-base">☀️</span>
+      </button>
+
       <a href="mailto:MishratWork@gmail.com" class="hidden sm:inline-flex items-center justify-center rounded-xl bg-gray-800/80 px-4 py-2 text-xs font-semibold text-gray-200 border border-gray-700/60 hover:bg-gray-700 hover:text-white transition-all">
         ✉️ Contact
       </a>
@@ -38,3 +49,32 @@
     </div>
   </div>
 </header>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('theme-toggle-btn');
+    const darkIcon = document.getElementById('theme-toggle-icon-dark');
+    const lightIcon = document.getElementById('theme-toggle-icon-light');
+
+    function updateIcons() {
+      const isLight = document.documentElement.classList.contains('light');
+      if (isLight) {
+        if (darkIcon) darkIcon.classList.add('hidden');
+        if (lightIcon) lightIcon.classList.remove('hidden');
+      } else {
+        if (darkIcon) darkIcon.classList.remove('hidden');
+        if (lightIcon) lightIcon.classList.add('hidden');
+      }
+    }
+
+    updateIcons();
+
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const isLight = document.documentElement.classList.toggle('light');
+        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        updateIcons();
+      });
+    }
+  });
+</script>
